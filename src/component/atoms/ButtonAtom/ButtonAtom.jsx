@@ -1,9 +1,9 @@
 import React from "react"
 
-const ButtonAtom = ({text}, props) => {
+const ButtonAtom = ({text, onClick}, props) => {
     
     return(
-        <button style={props.style}>{text}</button>
+        <button style={props.style} onClick={onClick}>{text}</button>
     )
 }
 

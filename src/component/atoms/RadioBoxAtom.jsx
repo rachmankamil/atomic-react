@@ -5,7 +5,7 @@ const RadioBoxAtom = ({item, name}) => {
         item.map(value => {
             return (
                 <>
-                    <input type="radio" name={name} id="" value={value} /> {value}
+                    <input type="radio" name={name} id={value} value={value} /> {value}
                 </>    
             )
         })

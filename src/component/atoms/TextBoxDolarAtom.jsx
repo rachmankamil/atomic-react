@@ -1,11 +1,11 @@
 import {InputGroup, Form} from "react-bootstrap"
 
-const TextBoxDollarAtom = ({name}) => {
+const TextBoxDollarAtom = (props) => {
     return (
         <>
             <InputGroup>
                 <InputGroup.Text>$</InputGroup.Text>
-                <Form.Control name={name}/>
+                <Form.Control {...props}/>
             </InputGroup>
         </>
     )

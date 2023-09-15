@@ -1,8 +1,30 @@
-import React from "react";
+import React, {useEffect, useReducer, useState} from "react";
 
 import TextBoxMolecule from "../molecules/TextBoxMolecule";
 import RadioBoxMolecule from "../molecules/RadioBoxMolecule";
-import ButtonAtom from "../atoms/ButtonAtom";
+import ButtonAtom from "../atoms/ButtonAtom/ButtonAtom";
+
+function reducer(state, action){
+    switch (action.type) {
+        case 'INCREMENT':
+            return {count : state.count +1, name: state.name}
+    
+        case 'DECREMENT':
+            return {count : state.count -1, name: state.name}
+
+        case 'CHANGENAME':
+            let newName = ""
+            if (state.name == "Rangga") {
+                newName ="Kamil"
+            } else {
+                newName ="Rangga"
+            }
+            return {name: newName, count: state.count}
+
+        default:
+            return state
+    }
+}
 
 const FormProductOrganism = () => {
     const buttonStyle = {
@@ -11,14 +33,36 @@ const FormProductOrganism = () => {
         borderRadius: "5px"
     }
 
+    const [state, dispatch] = useReducer(reducer, {count : 0, name : "Kamil"})
+
+    const [greeting, setGreeting] = useState("")
+    const [data, setData] = useState({
+        color: "white",
+        wheels: 4,
+        awd: true,
+        fuel: 110,
+        fc: 11.5
+    })
+
+    useEffect(()=>{
+        setGreeting("Hello, "+state.name)
+    },[state.name])
+
+    useEffect(()=>{
+        console.log("count "+count);
+    },[count])
+
     return (
         <>
-            <h4>Detail Product</h4>
-            <TextBoxMolecule name="product_name" label="Product Name"></TextBoxMolecule>
-            <TextBoxMolecule name="product_category" label="Product Category"></TextBoxMolecule>
+            <h4>{greeting}. Detail Product {state.count}</h4>
+            <TextBoxMolecule name="product_name" label="Product Name" value={state.name}></TextBoxMolecule>
+            <TextBoxMolecule name="product_category" label="Product Category" value="car"></TextBoxMolecule>
+            <TextBoxMolecule name="product_color" label="Product Color" value={data.color}></TextBoxMolecule>
             <RadioBoxMolecule name="product_freshness" label="Product Freshness" item={["Brand New", "Second Hand", "reFurbished"]}></RadioBoxMolecule>
             <div>
-                <ButtonAtom text="submit" style={buttonStyle}></ButtonAtom>
+                <ButtonAtom text="change name" style={buttonStyle} onClick={()=>{ dispatch({type: 'CHANGENAME'}) }}></ButtonAtom>
+                <ButtonAtom text="count +" style={buttonStyle} onClick={()=>{ dispatch({type: 'INCREMENT'}) }}></ButtonAtom>
+                <ButtonAtom text="count -" style={buttonStyle} onClick={()=>{ dispatch({type: 'DECREMENT'}) }}></ButtonAtom>
             </div>
         </>
     )
