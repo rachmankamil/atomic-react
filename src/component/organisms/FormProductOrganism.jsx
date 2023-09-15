@@ -3,6 +3,7 @@ import React, {useEffect, useReducer, useState} from "react";
 import TextBoxMolecule from "../molecules/TextBoxMolecule";
 import RadioBoxMolecule from "../molecules/RadioBoxMolecule";
 import ButtonAtom from "../atoms/ButtonAtom/ButtonAtom";
+import ModalMolecule from "../molecules/ModalMolecule";
 
 function reducer(state, action){
     switch (action.type) {
@@ -36,21 +37,32 @@ const FormProductOrganism = () => {
     const [state, dispatch] = useReducer(reducer, {count : 0, name : "Kamil"})
 
     const [greeting, setGreeting] = useState("")
-    const [data, setData] = useState({
+    const [data, setData] = useState([{
         color: "white",
         wheels: 4,
         awd: true,
         fuel: 110,
         fc: 11.5
-    })
+    }])
 
     useEffect(()=>{
         setGreeting("Hello, "+state.name)
+
     },[state.name])
 
-    useEffect(()=>{
-        console.log("count "+count);
-    },[count])
+    const addData = ()=>{
+        let newData = {
+            color: "black",
+            wheels: 4,
+            awd: true,
+            fuel: 110,
+            fc: 11.5
+        }
+
+        setData([...data, newData])
+
+        console.log(data);
+    }
 
     return (
         <>
@@ -63,6 +75,9 @@ const FormProductOrganism = () => {
                 <ButtonAtom text="change name" style={buttonStyle} onClick={()=>{ dispatch({type: 'CHANGENAME'}) }}></ButtonAtom>
                 <ButtonAtom text="count +" style={buttonStyle} onClick={()=>{ dispatch({type: 'INCREMENT'}) }}></ButtonAtom>
                 <ButtonAtom text="count -" style={buttonStyle} onClick={()=>{ dispatch({type: 'DECREMENT'}) }}></ButtonAtom>
+            </div>
+            <div>
+                <ModalMolecule buttonShow="Show Modal" buttonLeft="Cancel" buttonRight="OK" title="Delete Data" onclick={addData}>Are you really want to delete this data?</ModalMolecule>
             </div>
         </>
     )
