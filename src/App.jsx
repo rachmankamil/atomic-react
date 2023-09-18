@@ -1,36 +1,26 @@
 import { useState } from 'react'
+import { Routes, Route, BrowserRouter } from 'react-router-dom'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import ProductFormPage from './pages/ProductFormPage'
+import WhoIAm from './pages/WhoIAm'
+import PrivateRoute from './routes/PrivateRoutes'
+import DashboardAdmin from './pages/DashboardAdmin'
+import Login from './pages/Login'
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <>
-      <ProductFormPage></ProductFormPage>
-      {/* <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p> */}
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/hello/:firstname/:lastname" Component={WhoIAm}></Route>
+        <Route path="/product/" Component={ProductFormPage}></Route>
+        <Route path="/login" Component={Login}></Route>
+        <Route path="/admin" element={<PrivateRoute component={DashboardAdmin} />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
