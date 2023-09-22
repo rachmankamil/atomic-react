@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-import { Route, redirect as Rd, redirect } from "react-router-dom";
+import { Route, useNavigate } from "react-router-dom";
 
 const PrivateRoute = ({component: Component}) => {
-    if (localStorage.getItem("isLogin")==="true"){
-        return (<Component ></Component>)
-    } else {
-        //TODO:redirect to login
-    }
+    const nav = useNavigate()
+    useEffect(()=>{
+        if (localStorage.getItem("isLogin")!=="true"){
+            nav("/login")
+        }
+    })
+    
+    return (<Component ></Component>)
 }
 
 export default PrivateRoute
