@@ -9,6 +9,7 @@ const Login = () => {
 
     function login(){
         alert("username:"+username+" <====> password:"+password.current.value)
+        localStorage.setItem("isLogin", "true")
     }
 
     return(
