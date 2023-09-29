@@ -11,4 +11,10 @@ describe("Test Scenario Label", () => {
         )
         expect(screen.getByText(title)).toBeTruthy()
     })
+    // test("Invalid Test - Render Test - title not found", () => {
+    //     render(
+    //         <LabelAtom name="label1" title=""/>
+    //     )
+    //     expect(screen.getByRole("label")).toBeFalsy()
+    // })
 })

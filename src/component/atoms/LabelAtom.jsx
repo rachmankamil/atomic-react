@@ -7,7 +7,9 @@ const LabelAtom = ({name, title}) => {
         padding: "0 10px"
     }
     return (
-        <label htmlFor={name} style={labelStyle}>{title}</label>
+        title ?
+        <label htmlFor={name} style={labelStyle}>{title}</label> :
+        <></>
     )
 }
 
