@@ -75,7 +75,11 @@ const FormProductOrganism = () => {
 
     const insertProduct = () => {
         axios
-            .post("https://63206412e3bdd81d8ef940ed.mockapi.io/api/v1/product", productForm)
+            .post("https://63206412e3bdd81d8ef940ed.mockapi.io/api/v1/product", productForm, {
+                headers: {
+                    Authorization: "Bearer " + token
+                }
+            })
             .then((response)=>{
                 if (response.status == 201){
                     alert("Sukses menambahkan data!")

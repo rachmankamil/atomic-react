@@ -1,12 +1,18 @@
 import { useEffect, useState } from "react"
+import { getToken } from "../store/slices/token"
+import { useSelector } from "react-redux"
 
 const DashboardAdmin = () => {
+    const token = useSelector(getToken)
 
     const [data, setData] = useState([])
 
     async function getData() {
         const req = await fetch("https://63206412e3bdd81d8ef940ed.mockapi.io/api/v1/Users", {
-            method: "GET"
+            method: "GET",
+            headers: {
+                "Authorization": "Bearer "+token
+            }
         })
         const resp = await req.json()
         setData(resp)

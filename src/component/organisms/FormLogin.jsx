@@ -1,17 +1,34 @@
-import React, { useState, useRef } from "react"
+import React, { useState, useRef, useCallback } from "react"
 
 import TextBoxMolecule from "../molecules/TextBoxMolecule"
 import ButtonAtom from "../atoms/ButtonAtom/ButtonAtom"
 import { useNavigate } from "react-router-dom"
 
+import { setToken } from "../../store/slices/token"
+
+import axios from "axios" 
+import { useDispatch } from "react-redux"
+
 const Login = () => {
     const [username, setUsername] = useState('')
     const password = useRef('')
     const nav = useNavigate()
+    const dispatch = useDispatch()
+    
     function login(){
-        alert("username:"+username+" <====> password:"+password.current.value)
-        localStorage.setItem("isLogin", "true")
-        nav("/admin")
+        axios
+            .post("https://drariawan.altapro.online/login", {
+                "email": username,
+                "password": password.current.value
+            })
+            .then((result)=>{
+                //set the global state
+                dispatch(setToken(result.data.data.token))
+                localStorage.setItem("isLogin", "true")
+                nav("/admin")
+            })
+            .catch((err)=>{})
+        
     }
 
     return(
