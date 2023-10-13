@@ -4,6 +4,7 @@ import TextBoxMolecule from "../molecules/TextBoxMolecule";
 import RadioBoxMolecule from "../molecules/RadioBoxMolecule";
 import ButtonAtom from "../atoms/ButtonAtom/ButtonAtom";
 import ModalMolecule from "../molecules/ModalMolecule";
+import FileUpload from "../atoms/UploadFile";
 
 import axios from "axios";
 
@@ -37,12 +38,17 @@ const FormProductOrganism = () => {
     }
 
     const [state, dispatch] = useReducer(reducer, {count : 0, name : "Kamil"})
+    const [selectedFile, setFile] = useState(null)
+
+    const setImg = (event) => {
+        setFile(event.target.files[0])
+    }
 
     const [productForm, setProductForm] = useState({
         name: "",
         category: "",
         color: "",
-        freshness:""
+        freshness:"",
     })
 
     const [greeting, setGreeting] = useState("")
@@ -74,10 +80,19 @@ const FormProductOrganism = () => {
     }
 
     const insertProduct = () => {
+
+        const formData = new FormData();
+        formData.append("file", selectedFile)
+        formData.append("name", productForm.name)
+        formData.append("category", productForm.category)
+        formData.append("color", productForm.color)
+        formData.append("freshness", productForm.freshness)
+
         axios
-            .post("https://63206412e3bdd81d8ef940ed.mockapi.io/api/v1/product", productForm, {
+            .post("https://63206412e3bdd81d8ef940ed.mockapi.io/api/v1/product", formData, {
                 headers: {
-                    Authorization: "Bearer " + token
+                    Authorization: "Bearer " + token,
+                    "Content-Type": "multipart/form-data"
                 }
             })
             .then((response)=>{
@@ -93,7 +108,8 @@ const FormProductOrganism = () => {
     return (
         <>
             <h4>{greeting}. Detail Product {state.count}</h4>
-            <div>
+            <div>""
+                <FileUpload label="Upload file disini" onChange={setImg} />
                 <TextBoxMolecule name="product_name" label="Product Name" onChange={(val)=>{
                     setProductForm({name:val.target.value, 
                     category:productForm.category,
