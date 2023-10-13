@@ -2,6 +2,8 @@ import React from "react";
 
 import { useParams } from "react-router-dom"
 
+import FormAI from "../component/organisms/openai";
+
 const WhoIAm = () => {
     const {firstname, lastname} = useParams()
 
@@ -12,6 +14,9 @@ const WhoIAm = () => {
             <h1>
                 Welcome, {firstname} {lastname}
             </h1>
+
+            <FormAI></FormAI>
+
         </>
     )
 } 
