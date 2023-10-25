@@ -5,6 +5,7 @@ import RadioBoxMolecule from "../molecules/RadioBoxMolecule";
 import ButtonAtom from "../atoms/ButtonAtom/ButtonAtom";
 import ModalMolecule from "../molecules/ModalMolecule";
 import FileUpload from "../atoms/UploadFile";
+import cdUpload from "../../config/cloudinarySetup";
 
 import axios from "axios";
 
@@ -31,6 +32,7 @@ function reducer(state, action){
 }
 
 const FormProductOrganism = () => {
+
     const buttonStyle = {
         backgroundColor: "blue",
         color: "#0D6EFD",
@@ -81,8 +83,10 @@ const FormProductOrganism = () => {
 
     const insertProduct = () => {
 
+        const fileLink = cdUpload(selectedFile)
+
         const formData = new FormData();
-        formData.append("file", selectedFile)
+        formData.append("file", fileLink)
         formData.append("name", productForm.name)
         formData.append("category", productForm.category)
         formData.append("color", productForm.color)
